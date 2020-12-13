@@ -1,11 +1,21 @@
-# crawlers
+﻿# Crawlers
 
 ### Dcard 
-- 現在裡面設定只有抓一個版，要抓其他版要改code
-- terminal -> ruby main.rb執行
-- 欄位、停頓秒數是否需要調整
-- catch error
-- 目前只先抓dcard上面「午夜實驗室」這個版的文章還有回文
-- 現在只有抓下來此時此刻的文章和回文，還沒有更新（新文章、舊文章新回覆）的功能
-- 現在是存csv，之後要改成資料庫
+Main.rb
+- 設定 upto 從第 n+1 版開始執行
+- 設定 content_cut 抓取資料筆數
+
+###Terminal
+- ruby main.rb執行
+
+######To do list
+- 欄位待按需求增減
+- 更新（新文章、舊文章新回覆）的功能
+- 現在是存csv，待確認未來需求儲存方式
+- break_poin
+
+######beta_add
+- 設定 sleep_every 每 n 筆暫停
+- 設定 sleep_cut 暫停時休息秒數
+
 
