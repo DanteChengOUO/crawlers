@@ -143,12 +143,12 @@
 臺灣戲曲學院,tcpa,https://www.dcard.tw/_api/forums/tcpa/posts?popular=false
 黎明技術學院,lit,https://www.dcard.tw/_api/forums/lit/posts?popular=false
 稻江科技暨管理學院,toko,https://www.dcard.tw/_api/forums/toko/posts?popular=false
-臺灣觀光學院,tht,https://www.dcard.tw/_api/forums/tht/posts?popular=false
 蘭陽技術學院,fit,https://www.dcard.tw/_api/forums/fit/posts?popular=false
-東方設計大學,tf,https://www.dcard.tw/_api/forums/tf/posts?popular=false
 大漢技術學院,dahan,https://www.dcard.tw/_api/forums/dahan/posts?popular=false
+臺灣觀光學院,tht,https://www.dcard.tw/_api/forums/tht/posts?popular=false
 大同技術學院,ttc,https://www.dcard.tw/_api/forums/ttc/posts?popular=false
 亞太創意技術學院,apic,https://www.dcard.tw/_api/forums/apic/posts?popular=false
+東方設計大學,tf,https://www.dcard.tw/_api/forums/tf/posts?popular=false
 法鼓文理學院,dila,https://www.dcard.tw/_api/forums/dila/posts?popular=false
 和春技術學院,fotech,https://www.dcard.tw/_api/forums/fotech/posts?popular=false
 崇右影藝科技大學,cit,https://www.dcard.tw/_api/forums/cit/posts?popular=false
@@ -456,3 +456,6 @@ RO：守護永恆的愛,rom_gnjoy,https://www.dcard.tw/_api/forums/rom_gnjoy/pos
 特戰英豪,valorant,https://www.dcard.tw/_api/forums/valorant/posts?popular=false
 為美好的世界獻上祝福,konosuba,https://www.dcard.tw/_api/forums/konosuba/posts?popular=false
 Among Us,among_us,https://www.dcard.tw/_api/forums/among_us/posts?popular=false
+VTuber,vtuber,https://www.dcard.tw/_api/forums/vtuber/posts?popular=false
+台南,tainan,https://www.dcard.tw/_api/forums/tainan/posts?popular=false
+新竹,hsinchu,https://www.dcard.tw/_api/forums/hsinchu/posts?popular=false

@@ -1,12 +1,16 @@
-def get_post_content
+def get_post_content(sleep_every, sleep_cut)
   table = CSV.parse(File.read("post_id.csv"), headers: false)
   post_content = []
-  total = 0
+  total_cut = 0
   table.each do |line|
     begin
-      sleep(0.1)
-      total += 1
-      puts "-------No.#{total}--------"
+      if total_cut.modulo(sleep_every) == 0
+        sleep(sleep_cut)
+      else
+        sleep(rand(0.5..1.2))
+      end
+      total_cut += 1
+      puts "-------No.#{total_cut}--------"
       puts "#{line[0]}"
       puts ""
       url = "https://www.dcard.tw/_api/posts/#{line[0]}"

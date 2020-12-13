@@ -1,4 +1,4 @@
-def get_post_comment
+def get_post_comment(sleep_every, sleep_cut)
   table = CSV.parse(File.read("post_id.csv"), headers: false)
 
   post_comments = []
@@ -6,32 +6,36 @@ def get_post_comment
     begin
       count = 0
       last_floor = 0
-      totcnt = 0
+      total_cut = 0
       puts "=============#{line[2]}/#{line[0]}=============" #顯示"版名/文章ID" 回文過多方便確認
       while true
-        sleep(0.1)
+        sleep(rand(0.5..1.2))
         url = "https://www.dcard.tw/_api/posts/#{line[0]}/comments?after=#{last_floor}"
         uri = URI(url)
         data = Net::HTTP.get(uri)
         items = JSON.parse(data)
 
         if items.size < 30
-          sleep(0.1)
+          sleep(rand(0.5..1.2))
           items.each do |item|
             post_comments << [item["id"], item["postId"], item["createdAt"], item["updatedAt"], item["floor"], item["content"], item["likeCount"], item["gender"]]
             count += 1
-            totcnt += 1
-            puts "#{totcnt}----#{item["content"]}"
+            total_cut += 1
+            puts "#{total_cut}----#{item["content"]}"
           end
           break
         else
-          sleep(0.1)
+          if total_cut.modulo(sleep_every) == 0
+            sleep(sleep_cut)
+          else
+            sleep(rand(0.5..1.2))
+          end
           items.each do |item|
             post_comments << [item["id"], item["postId"], item["createdAt"], item["updatedAt"], item["floor"], item["content"], item["likeCount"], item["gender"]]
             count += 1
-            totcnt += 1
+            total_cut += 1
 
-            puts "#{totcnt}----#{item["content"]}"
+            puts "#{total_cut}----#{item["content"]}"
             if count == 30
               last_floor = item["floor"]
               count = 0

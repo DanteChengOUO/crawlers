@@ -12,6 +12,7 @@ require "fileutils"
 
 def loop_cawler
   all_boards = CSV.parse(File.read("forums.csv"), headers: false)
+
   # 0.upto = 從第一個版開始
   0.upto(all_boards.count-1) do |board|
 
@@ -19,10 +20,16 @@ def loop_cawler
       
     # Content_cut = 撈取資料數
     content_cut = 50
-    
-    get_post_id(board, content_cut)
-    get_post_content()
-    get_post_comment()
+   
+    # 每 n 筆資料暫停
+    sleep_every = 10 
+
+    # 暫停時休息秒數
+    sleep_cut = 5
+
+    get_post_id(board, content_cut,sleep_every ,sleep_cut )
+    get_post_content(sleep_every ,sleep_cut)
+    get_post_comment(sleep_every ,sleep_cut)
     mv_files(table_title, content_cut)
   end
 end

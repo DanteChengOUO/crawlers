@@ -16,4 +16,6 @@ def get_forums
     puts "error type=#{e.class}, message=#{e.message}" 
   end 
   File.write("forums.csv", forums.map(&:to_csv).join)
+
+  
 end 

@@ -1,14 +1,11 @@
-# 二、每個forum的post_id_url一次只能顯示30筆post_id，所以要抓三十筆裡面最後一個id再往url加上before繼續往下抓，抓到沒有下一頁才停
-
-def get_post_id
+def get_post_id(board, content_cut)
   table = CSV.parse(File.read("forums.csv"), headers: false)
 
-  # 先試1個版而已～
-  table = table[1...2]
-  
+  current_table = table["#{board}".to_i.."#{board}".to_i]
+
   all_post_id = []
-  table.each do |line|
-    p "=============#{line[0]}============" # print board name 
+  current_table.each do |line|
+    puts "=============#{board + 1}.#{line[0]}============" # print board name
     url = line[2]
     uri = URI(url)
     data = Net::HTTP.get(uri)
@@ -17,49 +14,78 @@ def get_post_id
     forum_post_id = []
     count = 0
     last_id = 0
+    total_cnt = 0
+    e = 0
 
     items.each do |item|
-      sleep(0.5)
-      forum_post_id << [item["id"],item["title"],item["forumName"], item["forumAlias"]]
-      count += 1
-      p count, "第一頁"
-      if count == 30 
-        last_id = item["id"]
-        count = 0
+      # break if item
+      begin
+        sleep(0.1)
+        forum_post_id << [item["id"], item["title"], item["forumName"], item["forumAlias"]]
+        count += 1
+        total_cnt += 1
+        puts total_cnt, "----------#{item["title"]}" # print how much board and board name
+        if count == 30
+          last_id = item["id"]
+          count = 0
+        end
+      rescue => e
+        puts "==========================================="
+        puts "error type=#{e.class}, message=#{e.message}"
+        puts "==========================================="
       end
+      break if total_cnt == content_cut #break when reach setting
+      break if e.class == TypeError
     end
-
     while true
-      url = "#{line[2]}&before=#{last_id}" 
+      break if total_cnt == content_cut #break when reach setting
+      break if e.class == TypeError
+      url = "#{line[2]}&before=#{last_id}"
       uri = URI(url)
       data = Net::HTTP.get(uri)
       items = JSON.parse(data)
 
-      if items.size < 30 
+      if items.size < 30
         items.each do |item|
-          sleep(0.5)
-          p "最後一頁"
-          forum_post_id << [item["id"],item["title"],item["forumName"], item["forumAlias"]]
-        end 
-        break
-      else 
-        count = 0
-        items.each do |item|
-          sleep(0.4)
-          forum_post_id << [item["id"],item["title"],item["forumName"], item["forumAlias"]]
-          count += 1
-          p count, "後面還有"
-          if count == 30 
-            last_id = item["id"]
-            count = 0
+          begin
+            total_cnt += 1
+            sleep(0.1)
+            puts total_cnt, "-----------#{item["title"]}"
+            forum_post_id << [item["id"], item["title"], item["forumName"], item["forumAlias"]]
+          rescue => e
+            puts "==========================================="
+            puts "error type=#{e.class}, message=#{e.message}"
+            puts "==========================================="
           end
         end
-      end 
+        break
+      else
+        break if e.class == TypeError
+        break if total_cnt == content_cut #break when reach setting
+        count = 0
+        items.each do |item|
+          begin
+            sleep(0.1)
+            forum_post_id << [item["id"], item["title"], item["forumName"], item["forumAlias"]]
+            count += 1
+            total_cnt += 1
+            puts total_cnt, "-----------#{item["title"]}"
+            if count == 30
+              last_id = item["id"]
+              count = 0
+            end
+          rescue => e
+            puts "==========================================="
+            puts "error type=#{e.class}, message=#{e.message}"
+            puts "==========================================="
+          end
+          break if e.class == TypeError
+          break if total_cnt == content_cut
+        end
+      end
     end
-    all_post_id += forum_post_id 
+    all_post_id += forum_post_id
   end
 
   File.write("post_id.csv", all_post_id.map(&:to_csv).join)
-
-  f = table[0.1][0]
-end 
+end
